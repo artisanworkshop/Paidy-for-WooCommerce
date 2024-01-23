@@ -1,12 +1,12 @@
 {
 	"name": "paidy-wc",
-	"title": "Japanized for WooCommerce",
-	"version": "2.6.7",
+	"title": "Paidy for WooCommerce",
+	"version": "1.4.0",
 	"license": "GPL-3.0",
 	"homepage": "http://wordpress.org/plugins/paidy-wc/",
 	"repository": {
-	  "type": "git",
-	  "url": "git://github.com/artws/paidy-wc.git"
+	  "type": "github",
+	  "url": "https://github.com/artisanworkshop/Paidy-for-WooCommerce.git"
 	},
 	"devDependencies": {
 		"@woocommerce/dependency-extraction-webpack-plugin": "^2.2.0",
