@@ -13,7 +13,7 @@ import { RawHTML } from '@wordpress/element';
 import { PAYMENT_METHOD_NAME } from './constants';
 
 const settings = getPaymentMethodData( 'paidy', {} );
-const defaultLabel = __( 'Paidy', 'woocommerce-for-japan' );
+const defaultLabel = __( 'Paidy', 'paidy-wc' );
 const label = decodeEntities( settings?.title || '' ) || defaultLabel;
 const content = settings.description + settings.paidy_description;
 
