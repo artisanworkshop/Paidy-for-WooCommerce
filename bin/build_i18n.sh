@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Check for required version.
-WPCLI_VERSION=`wp cli version | cut -f2 -d' '`
-if [ ${WPCLI_VERSION:0:1} -lt "2" -o ${WPCLI_VERSION:0:1} -eq "2" -a ${WPCLI_VERSION:2:1} -lt "1" ]; then
-	echo WP-CLI version 2.1.0 or greater is required to make JSON translation files
-	exit
-fi
+# WPCLI_VERSION=`wp cli version | cut -f2 -d' '`
+# if [ ${WPCLI_VERSION:0:1} -lt "2" -o ${WPCLI_VERSION:0:1} -eq "2" -a ${WPCLI_VERSION:2:1} -lt "1" ]; then
+# 	echo WP-CLI version 2.1.0 or greater is required to make JSON translation files
+#	exit
+# fi
 
 # HELPERS.
 GREEN='\033[0;32m'

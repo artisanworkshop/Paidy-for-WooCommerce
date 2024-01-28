@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @class 		WC_Gateway_Paidy
  * @extends		WC_Payment_Gateway
- * @version		1.3.0
+ * @version		1.4.0
  * @package		WooCommerce/Classes/Payment
  * @author 		Artisan Workshop
  */
@@ -106,6 +106,8 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
 
         add_action( 'woocommerce_order_status_completed', array( $this, 'jp4wc_order_paidy_status_completed' ) );
         add_action( 'woocommerce_order_status_cancelled', array( $this, 'jp4wc_order_paidy_status_cancelled' ) );
+
+        add_action( 'woocommerce_process_shop_order_meta', array( $this, 'jp4wc_order_paidy_change_price' ), 60, 2 );
     }
 
     /**
@@ -835,6 +837,26 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
     }
 
     /**
+     * Check Paidy payment details by payment_id
+     *
+     * @param string $payment_id
+     * @return void
+     */
+    public function paidy_get_payment_data( $payment_id ){
+        $send_url = 'https://api.paidy.com/payments/' . $payment_id ;
+        $args = array(
+            'method' => 'POST',
+            'body' => '',
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'Paidy-Version' => '2018-04-10',
+                'Authorization' => 'Bearer ' . $this->set_api_secret_key()
+            )
+        );
+        return wp_remote_post($send_url, $args);
+    }
+
+    /**
      * Send notice e-mail to shop owner
      *
      * @param  string $message
@@ -958,6 +980,18 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
         <?php
 
         return ob_get_clean();
+    }
+
+    public function jp4wc_order_paidy_change_price( $order_id, $order ){
+        if( OrderUtil::is_order( $order_id, wc_get_order_types() ) && $this->id == $order->get_payment_method()){
+            $payment_id = $order->get_transaction_id();
+            if($payment_id && substr( $payment_id,0 ,4 ) == 'pay_' ){
+                $payment_data = $this->paidy_get_payment_data( $payment_id );
+                if( $payment_data && $payment_data['amount'] !== $order->get_total() ){
+
+                }
+            }
+        }
     }
 }
 

@@ -3,8 +3,8 @@ Contributors: artisan-workshop-1, shohei.tanaka
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@artws.info&item_name=Donation+for+Artisan&currency_code=JPY
 Tags: woocommerce, ecommerce, e-commerce, japanese,payment, paidy
 Requires at least: 5.0
-Tested up to: 6.2.2
-Stable tag: 1.3.0
+Tested up to: 6.4.2
+Stable tag: 1.4.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -68,6 +68,9 @@ A: No, after application, it becomes available after providing information such 
 
 
 == Changelog ==
+
+= 1.4.0 - 2024-01-24 =
+
 
 = 1.3.0 - 2023-08-03 =
 * Update - Compatible HPOS
