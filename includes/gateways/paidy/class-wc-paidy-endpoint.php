@@ -63,7 +63,7 @@ function paidy_check_webhook( $data ){
                 $order->add_order_note(sprintf(__('It succeeded to check the %s of the order in Paidy Webhook.', 'paidy-wc'), __('authorization', 'paidy-wc')));
             }elseif( $main_data["status"] == 'authorize_success' && $status == 'processing' ){
                 $order->add_order_note( __('This order status is processing, this site received authorize_success from the Paidy webhook.', 'paidy-wc') );
-            }elseif( $main_data["status"] == 'capture_success' && $status == 'processing' ){
+            }elseif( $main_data["status"] == 'capture_success' && $status == 'completed' ){
                 $order->add_order_note( sprintf( __( 'It succeeded to check the %s of the order in Paidy Webhook.', 'paidy-wc' ), __( 'completed', 'paidy-wc' ) ) );
             }elseif( $main_data["status"] == 'close_success' && $status == 'cancelled' ){
                 $order->add_order_note( sprintf( __( 'It succeeded to check the %s of the order in Paidy Webhook.', 'paidy-wc' ), __( 'cancelled', 'paidy-wc' ) ) );

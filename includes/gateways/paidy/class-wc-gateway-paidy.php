@@ -739,7 +739,6 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 $this->jp4wc_framework->jp4wc_debug_log( $debug_message, true, 'paidy-wc');
             }
             $capture = wp_remote_post( $send_url, $args );
-            $order->add_order_note(__('In the payment completion process, the amount and ID match were confirmed.', 'paidy-wc'));
             $capture_array = json_decode( $capture['body'], true );
 
             if( $capture_array['status'] == 'closed' ) {
