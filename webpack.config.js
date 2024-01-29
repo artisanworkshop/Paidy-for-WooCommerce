@@ -31,7 +31,7 @@ module.exports = {
 		'frontend/paidy': '/src/paidy/index.js',
 	},
 	output: {
-		path: path.resolve( __dirname, 'assets/js' ),
+		path: path.resolve( __dirname, 'includes/gateways/paidy/assets/js' ),
 		filename: '[name].js',
 	},
 	plugins: [

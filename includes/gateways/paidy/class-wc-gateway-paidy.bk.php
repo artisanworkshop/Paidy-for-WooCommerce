@@ -52,16 +52,16 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
      */
     public function __construct() {
 		$this->id                 = 'paidy';
-//		$this->icon               = apply_filters('woocommerce_paidy_icon', WC_PAIDY_PLUGIN_URL . 'assets/images/paidy_logo_100_2023.png');
+//		$this->icon               = apply_filters('woocommerce_paidy_icon', 'assets/images/paidy_logo_100_2023.png');
 		$this->has_fields         = false;
-        $this->order_button_text = sprintf(__( 'Proceed to %s', 'paidy-wc' ), __('Paidy', 'paidy-wc' ));
+        $this->order_button_text = sprintf(__( 'Proceed to %s', 'woocommerce-for-japan' ), __('Paidy', 'woocommerce-for-japan' ));
 
 		// Create plugin fields and settings
 		$this->init_form_fields();
 		$this->init_settings();
 
-        $this->method_title       = __( 'Paidy Payment', 'paidy-wc' );
-        $this->method_description = __( '"Paidy next month payment" reduces the opportunity loss due to the payment method and contributes to sales increase.', 'paidy-wc' );
+        $this->method_title       = __( 'Paidy Payment', 'woocommerce-for-japan' );
+        $this->method_description = __( '"Paidy next month payment" reduces the opportunity loss due to the payment method and contributes to sales increase.', 'woocommerce-for-japan' );
 
         $this->supports = array(
             'products',
@@ -76,7 +76,6 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
         // Define user set variables
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
-//		$this->instructions = $this->get_option( 'instructions', $this->description );
 
 		// Actions Hook
         add_action( 'woocommerce_update_options_payment_gateways', array( $this, 'process_admin_options' ) );
@@ -92,116 +91,116 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
 
         add_action( 'woocommerce_order_status_completed', array( $this, 'jp4wc_order_paidy_status_completed' ) );
         add_action( 'woocommerce_order_status_cancelled', array( $this, 'jp4wc_order_paidy_status_cancelled' ) );
-    }
+	}
 
-    /**
+	/**
      * Initialise Gateway Settings Form Fields
      */
 	public function init_form_fields() {
     	$this->form_fields = array(
 			'enabled' => array(
-				'title'   => __( 'Enable/Disable', 'paidy-wc' ),
+				'title'   => __( 'Enable/Disable', 'woocommerce-for-japan' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable Paidy', 'paidy-wc' ),
+				'label'   => __( 'Enable Paidy', 'woocommerce-for-japan' ),
 				'default' => 'no'
 			),
 			'title' => array(
-				'title'       => __( 'Title', 'paidy-wc' ),
+				'title'       => __( 'Title', 'woocommerce-for-japan' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'paidy-wc' ),
-				'default'     => __( 'Paidy Payment', 'paidy-wc' ),
+				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-for-japan' ),
+				'default'     => __( 'Paidy Payment', 'woocommerce-for-japan' ),
 				'desc_tip'    => true,
 			),
 			'description' => array(
-				'title'       => __( 'Description', 'paidy-wc' ),
+				'title'       => __( 'Description', 'woocommerce-for-japan' ),
 				'type'        => 'textarea',
-				'description' => __( 'Payment method description that the customer will see on your checkout.', 'paidy-wc' ),
-                'default'     => __( 'No matter how many times you shop a month, you pay once in the following month. <br /> The following payment methods are available.', 'paidy-wc' ),
+				'description' => __( 'Payment method description that the customer will see on your checkout.', 'woocommerce-for-japan' ),
+                'default'     => __( 'No matter how many times you shop a month, you pay once in the following month. <br /> The following payment methods are available.', 'woocommerce-for-japan' ),
 				'desc_tip'    => true,
 			),
             'paidy_description' => array(
-                'title'       => __( 'Paidy description', 'paidy-wc' ),
+                'title'       => __( 'Paidy description', 'woocommerce-for-japan' ),
                 'type'        => 'textarea',
                 'custom_attributes' => array( 'rows' => 6 ),
-                'description' => __( 'Payment method description for paidy explanation that the customer will see on your checkout.', 'paidy-wc' ),
+                'description' => __( 'Payment method description for paidy explanation that the customer will see on your checkout.', 'woocommerce-for-japan' ),
                 'default'     => $this->paidy_explanation(),
                 'desc_tip'    => true,
             ),
             'order_button_text' => array(
-                'title'       => __( 'Order Button Text', 'paidy-wc' ),
+                'title'       => __( 'Order Button Text', 'woocommerce-for-japan' ),
                 'type'        => 'text',
-                'description' => __( 'This controls the description which the user sees during checkout.', 'paidy-wc' ),
-                'default'     => sprintf(__( 'Proceed to %s', 'paidy-wc' ), __('Paidy', 'paidy-wc' )),
+                'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-for-japan' ),
+                'default'     => sprintf(__( 'Proceed to %s', 'woocommerce-for-japan' ), __('Paidy', 'woocommerce-for-japan' )),
             ),
             'environment' => array(
-                'title'       => __( 'Environment', 'paidy-wc' ),
+                'title'       => __( 'Environment', 'woocommerce-for-japan' ),
                 'type'        => 'select',
-                'description' => __( 'This setting specifies whether you will process live transactions, or whether you will process simulated transactions using the Paidy Sandbox.', 'paidy-wc' ),
+                'description' => __( 'This setting specifies whether you will process live transactions, or whether you will process simulated transactions using the Paidy Sandbox.', 'woocommerce-for-japan' ),
                 'default'     => 'live',
                 'desc_tip'    => true,
                 'options'     => array(
-                    'live'    => __( 'Live', 'paidy-wc' ),
-                    'sandbox' => __( 'Sandbox', 'paidy-wc' ),
+                    'live'    => __( 'Live', 'woocommerce-for-japan' ),
+                    'sandbox' => __( 'Sandbox', 'woocommerce-for-japan' ),
                 ),
             ),
             'api_public_key' => array(
-                'title'       => __( 'API Public Key', 'paidy-wc' ),
+                'title'       => __( 'API Public Key', 'woocommerce-for-japan' ),
                 'type'        => 'text',
-                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'paidy-wc' ),__( 'API Public Key', 'paidy-wc' )),
+                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'woocommerce-for-japan' ),__( 'API Public Key', 'woocommerce-for-japan' )),
                 'default'     => '',
                 'desc_tip'    => true,
             ),
             'api_secret_key' => array(
-                'title'       => __( 'API Secret Key', 'paidy-wc' ),
+                'title'       => __( 'API Secret Key', 'woocommerce-for-japan' ),
                 'type'        => 'password',
-                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'paidy-wc' ),__( 'API Secret Key', 'paidy-wc' )),
+                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'woocommerce-for-japan' ),__( 'API Secret Key', 'woocommerce-for-japan' )),
                 'default'     => '',
                 'desc_tip'    => true,
             ),
             'test_api_public_key' => array(
-                'title'       => __( 'Test API Public Key', 'paidy-wc' ),
+                'title'       => __( 'Test API Public Key', 'woocommerce-for-japan' ),
                 'type'        => 'text',
-                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'paidy-wc' ),__( 'Test API Public Key', 'paidy-wc' )),
+                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'woocommerce-for-japan' ),__( 'Test API Public Key', 'woocommerce-for-japan' )),
                 'default'     => '',
                 'desc_tip'    => true,
             ),
             'test_api_secret_key' => array(
-                'title'       => __( 'Test API Secret Key', 'paidy-wc' ),
+                'title'       => __( 'Test API Secret Key', 'woocommerce-for-japan' ),
                 'type'        => 'password',
-                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'paidy-wc' ),__( 'Test API Secret Key', 'paidy-wc' )),
+                'description' => sprintf(__( 'Please enter %s from Paidy Admin site.', 'woocommerce-for-japan' ),__( 'Test API Secret Key', 'woocommerce-for-japan' )),
                 'default'     => '',
                 'desc_tip'    => true,
             ),
             'store_name'       => array(
-                'title'       => __( 'Store Name', 'paidy-wc' ),
+                'title'       => __( 'Store Name', 'woocommerce-for-japan' ),
                 'type'        => 'text',
-                'description' => __( 'This controls the store name which the user sees during paidy checkout.', 'paidy-wc' ),
+                'description' => __( 'This controls the store name which the user sees during paidy checkout.', 'woocommerce-for-japan' ),
                 'default'     => get_bloginfo( 'name' )
             ),
             'logo_image_url' => array(
-                'title'       => __( 'Logo Image (168×168 recommend)', 'paidy-wc' ),
+                'title'       => __( 'Logo Image (168×168 recommend)', 'woocommerce-for-japan' ),
                 'type'        => 'image',
-                'description' => __( 'URL of a custom logo that can be displayed in the checkout application header. If no value is specified, the Paidy logo will be displayed.', 'paidy-wc' ),
+                'description' => __( 'URL of a custom logo that can be displayed in the checkout application header. If no value is specified, the Paidy logo will be displayed.', 'woocommerce-for-japan' ),
                 'default'     => '',
                 'desc_tip'    => true,
-                'placeholder' => __( 'Optional', 'paidy-wc' ),
+                'placeholder' => __( 'Optional', 'woocommerce-for-japan' ),
             ),
             'debug' => array(
-                'title'   => __( 'Debug Mode', 'paidy-wc' ),
+                'title'   => __( 'Debug Mode', 'woocommerce-for-japan' ),
                 'type'    => 'checkbox',
-                'label'   => __( 'Enable Debug Mode', 'paidy-wc' ),
+                'label'   => __( 'Enable Debug Mode', 'woocommerce-for-japan' ),
                 'default' => 'no',
-                'description' => __( 'Save debug data using WooCommerce logging.', 'paidy-wc' ),
+                'description' => __( 'Save debug data using WooCommerce logging.', 'woocommerce-for-japan' ),
             ),
             'webhook' => array(
-                'title'   => __( 'About Webhook', 'paidy-wc' ),
+                'title'   => __( 'About Webhook', 'woocommerce-for-japan' ),
                 'type'    => 'title',
-                'description' => __( 'The webhooks set in the Paidy management screen are as follows. <br />', 'paidy-wc' ) . '<strong>' . site_url() . '/wp-json/paidy/v1/order/' . '</strong>',
+                'description' => __( 'The webhooks set in the Paidy management screen are as follows. <br />', 'woocommerce-for-japan' ) . '<strong>' . site_url() . '/wp-json/paidy/v1/order/' . '</strong>',
             ),
             'notice_email'       => array(
-                'title'       => __( 'Notice e-mail', 'paidy-wc' ),
+                'title'       => __( 'Notice e-mail', 'woocommerce-for-japan' ),
                 'type'        => 'text',
-                'description' => __( 'Set an e-mail address to send an e-mail when an error occurs during connection with paidy.', 'paidy-wc' ),
+                'description' => __( 'Set an e-mail address to send an e-mail when an error occurs during connection with paidy.', 'woocommerce-for-japan' ),
                 'default'     => get_option( 'admin_email' )
             ),
 		);
@@ -215,7 +214,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
         ?>
         <br />
         <a href="https://paidy.com/consumer" target="_blank" class="jp4wc-paidy-icon">
-            <img src="<?php echo WC_PAIDY_PLUGIN_URL;?>assets/images/paidy_checkout_2023_320x100.png" alt="Paidy 翌月まとめてお支払い" style="max-height: none; float: none;">
+            <img src="<?php echo JP4WC_URL_PATH;?>assets/images/paidy_checkout_2023_320x100.png" alt="Paidy 翌月まとめてお支払い" style="max-height: none; float: none;">
         </a>
         <br />
         <p class="jp4wc-paidy-description"><?php echo $this->description; ?></p>
@@ -320,7 +319,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                     "quantity":' . $item->get_quantity() . ',
                     "title":"' . $item_name . '",
                     "unit_price":' . $unit_price;
-                    $paidy_amount += $item->get_quantity()*$unit_price;
+                $paidy_amount += $item->get_quantity()*$unit_price;
             }
             if ($item === end($order_items) and (!isset($fees))) {
                 $items .= '}
@@ -351,7 +350,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
             $cart_total += $coupon->get_subtotal();
         }
 
-        if(isset( $fees )){
+		if(isset( $fees )){
             $i = 1;
             foreach ( $fees as $fee ){
                 $items .= '{
@@ -493,7 +492,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                             "items": [
                                 <?php echo $items;?>
 
-                            ],
+						],
                             "order_ref": "<?php echo $paidy_order_ref; ?>",
                             <?php if($not_virtual)echo '"shipping": '.$order->get_shipping_total().','; ?>
                             "tax": <?php echo $tax;?>
@@ -514,9 +513,9 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 }
             </script>
         <?php elseif($this->enabled =='yes' and isset($api_public_key) and $api_public_key == ''): ?>
-            <h2><?php echo __('This order has already been settled.', 'paidy-wc'); ?></h2>
+            <h2><?php echo __('This order has already been settled.', 'woocommerce-for-japan'); ?></h2>
         <?php else: ?>
-            <h2><?php echo __('API Public key is not set. Please set an API public key in the admin page.', 'paidy-wc'); ?></h2>
+            <h2><?php echo __('API Public key is not set. Please set an API public key in the admin page.', 'woocommerce-for-japan'); ?></h2>
         <?php endif;
     }
 
@@ -544,9 +543,9 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
 
 	        wp_enqueue_script(
 		        'paidy-redirect',
-		        WC_PAIDY_PLUGIN_URL.'assets/js/jp4wc-paidy.js',
+		        JP4WC_URL_PATH.'assets/js/jp4wc-paidy.js',
 		        array(),
-		        WC_PAIDY_VERSION,
+		        JP4WC_VERSION,
 		        true
 	        );
             $paygent_token_js_link = 'https://apps.paidy.com/';
@@ -555,15 +554,15 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                     'paidy-token',
                     $paygent_token_js_link,
                     array(),
-	                WC_PAIDY_VERSION,
+	                JP4WC_VERSION,
                     false
                 );
                 // Paidy Payment for Checkout page
                 wp_register_style(
                     'jp4wc-paidy',
-	                WC_PAIDY_PLUGIN_URL . 'assets/css/jp4wc-paidy.css',
+                    JP4WC_URL_PATH . 'assets/css/jp4wc-paidy.css',
                     false,
-	                WC_PAIDY_VERSION
+                    JP4WC_VERSION
                 );
                 wp_enqueue_style( 'jp4wc-paidy' );
             }
@@ -579,18 +578,18 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
         if ( is_admin() && wp_script_is('wc-gateway-ppec-settings') == false && isset($_GET['section']) && $_GET['section'] =='paidy') {
             wp_enqueue_script(
                 'wc-gateway-paidy-settings',
-	            WC_PAIDY_PLUGIN_URL . 'assets/js/wc-gateway-paidy-settings.js',
+                JP4WC_URL_PATH . 'assets/js/wc-gateway-paidy-settings.js',
                 array('jquery'),
-	            WC_PAIDY_VERSION,
+                JP4WC_VERSION,
                 true
             );
         }
         if( is_admin() && isset($_GET['section']) && isset($_GET['tab']) && $_GET['section'] == 'paidy' && $_GET['tab'] == 'checkout' ){
             wp_register_style(
                 'jp4wc_paidy_admin',
-	            WC_PAIDY_PLUGIN_URL . 'assets/css/admin-jp4wc-paidy.css',
+                JP4WC_URL_PATH . 'assets/css/admin-jp4wc-paidy.css',
                 false,
-	            WC_PAIDY_VERSION
+                JP4WC_VERSION
             );
             wp_enqueue_style( 'jp4wc_paidy_admin' );
         }
@@ -604,10 +603,10 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
     public function checkout_reject_to_cancel( $checkout ){
         if( isset($_GET['status']) ){
             if($_GET['status'] == 'closed'){
-                $message = __('Once the customer interrupted the payment.. Order ID:', 'paidy-wc').$_GET['order_id'];
+                $message = __('Once the customer interrupted the payment.. Order ID:', 'woocommerce-for-japan').$_GET['order_id'];
                 $this->jp4wc_framework->jp4wc_debug_log($message, $this->debug, 'paidy-wc');
             }elseif($_GET['status'] == 'rejected' or isset($_GET['order_id'])){
-                $reject_message = __('This Paidy payment has been declined. Please select another payment method.', 'paidy-wc');
+                $reject_message = __('This Paidy payment has been declined. Please select another payment method.', 'woocommerce-for-japan');
                 wc_add_notice( $reject_message, 'error');
             }
         }
@@ -625,7 +624,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
             // Reduce stock levels
             wc_reduce_stock_levels( $order_id );
             $order->payment_complete($_GET['transaction_id']);
-            $message = __('Paidy Payment succeeds to authorize and move to thank you page. Get data is following.', 'paidy-wc')."\n";
+            $message = __('Paidy Payment succeeds to authorize and move to thank you page. Get data is following.', 'woocommerce-for-japan')."\n";
             $message .= $this->jp4wc_framework->jp4wc_array_to_message($_GET);
             $this->jp4wc_framework->jp4wc_debug_log( $message, $this->debug, 'paidy-wc');
         }
@@ -639,7 +638,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
      * @return mixed
      */
     public function validate_api_public_key_field( $key, $value ) {
-        return $this->setting_required_field( __( 'API Public Key', 'paidy-wc' ), __( 'Production environment', 'paidy-wc' ), $value );
+        return $this->setting_required_field( __( 'API Public Key', 'woocommerce-for-japan' ), __( 'Production environment', 'woocommerce-for-japan' ), $value );
     }
 
     /**
@@ -650,7 +649,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
      * @return mixed
      */
     public function validate_api_secret_key_field( $key, $value ) {
-        return $this->setting_required_field( __( 'API Secret Key', 'paidy-wc' ), __( 'Production environment', 'paidy-wc' ), $value );
+        return $this->setting_required_field( __( 'API Secret Key', 'woocommerce-for-japan' ), __( 'Production environment', 'woocommerce-for-japan' ), $value );
     }
 
     /**
@@ -665,7 +664,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
         if ( isset( $value )  && 1 > strlen( $value ) ) {
             $paidy_link = 'https://campaign.paidy.com/woocommerce';
             /* translators: 1) Field title 2) Environment 3) Paidy PR link */
-            WC_Admin_Settings::add_error( sprintf(__( 'If you do not set %1$s, it will not work in the %2$s. Application is necessary for acquisition.', 'paidy-wc' ), $title, $environment, $paidy_link) );
+            WC_Admin_Settings::add_error( sprintf(__( 'If you do not set %1$s, it will not work in the %2$s. Application is necessary for acquisition.', 'woocommerce-for-japan' ), $title, $environment, $paidy_link) );
         }
 
         return $value;
@@ -707,7 +706,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 $message = $this->jp4wc_framework->jp4wc_array_to_message($close_array) . 'This is close data.';
                 $this->jp4wc_framework->jp4wc_debug_log($message, $this->debug, 'paidy-wc');
 
-                $order->add_order_note(__('Cancelled processing has not been completed due to a Paidy error. Please check Paidy admin.', 'paidy-wc'));
+                $order->add_order_note(__('Cancelled processing has not been completed due to a Paidy error. Please check Paidy admin.', 'woocommerce-for-japan'));
             }
         }
     }
@@ -739,7 +738,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 $this->jp4wc_framework->jp4wc_debug_log( $debug_message, true, 'paidy-wc');
             }
             $capture = wp_remote_post( $send_url, $args );
-            $order->add_order_note(__('In the payment completion process, the amount and ID match were confirmed.', 'paidy-wc'));
+            $order->add_order_note(__('In the payment completion process, the amount and ID match were confirmed.', 'woocommerce-for-japan'));
             $capture_array = json_decode( $capture['body'], true );
 
             if( $capture_array['status'] == 'closed' ) {
@@ -749,10 +748,10 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 $order->set_meta_data( array( 'paidy_capture_id' => $capture_array['captures'][0]['id'] ) );
                 $order->save_meta_data();
                 if ($capture_array['amount'] == $order->get_total() and $transaction_id == $capture_array['id']) {
-                    $order->add_order_note(__('In the payment completion process, the amount and ID match were confirmed.', 'paidy-wc'));
+                    $order->add_order_note(__('In the payment completion process, the amount and ID match were confirmed.', 'woocommerce-for-japan'));
                     return true;
                 } else {
-                    $order->add_order_note(__('In the payment completion process, the amount and ID did not match. Check on the Paidy admin.', 'paidy-wc'));
+                    $order->add_order_note(__('In the payment completion process, the amount and ID did not match. Check on the Paidy admin.', 'woocommerce-for-japan'));
                 }
             }elseif( is_wp_error( $capture )){
                 $message = $capture->get_error_message();
@@ -761,9 +760,9 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 $message = $this->jp4wc_framework->jp4wc_array_to_message($capture_array).'This is capture data.';
                 $this->jp4wc_framework->jp4wc_debug_log( $message, $this->debug, 'paidy-wc');
 
-                $order->add_order_note( __('Completion processing has not been completed due to a Paidy error.', 'paidy-wc') );
+                $order->add_order_note( __('Completion processing has not been completed due to a Paidy error.', 'woocommerce-for-japan') );
             }
-            $situation = __('Status Change from Processing to completed.', 'paidy-wc');
+            $situation = __('Status Change from Processing to completed.', 'woocommerce-for-japan');
             $email_message = $this->notice_message( $order_id, $transaction_id, $situation, $message );
             $this->send_notice_email( $email_message );
             return false;
@@ -803,7 +802,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
             if($capture_id != ''){
                 $refund = wp_remote_post($send_url, $args);
             }else{
-                $order->add_order_note( __('Refund is not possible because Paidy has not completed processing.', 'paidy-wc') );
+                $order->add_order_note( __('Refund is not possible because Paidy has not completed processing.', 'woocommerce-for-japan') );
                 return false;
             }
             $refund_array = json_decode( $refund['body'], true );
@@ -819,20 +818,20 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 }
                 $order->set_meta_data( array( 'paidy_refund_id' => $refunds_array ) );
                 $order->save_meta_data();
-                $order->add_order_note( __('Completion refunding has been completed at Paidy.', 'paidy-wc') );
+                $order->add_order_note( __('Completion refunding has been completed at Paidy.', 'woocommerce-for-japan') );
                 return true;
             }else{
                 $message = $this->jp4wc_framework->jp4wc_array_to_message($refund_array).'This is refund data.';
                 $this->jp4wc_framework->jp4wc_debug_log( $message, $this->debug, 'paidy-wc');
 
-                $order->add_order_note( __('Completion processing has not been completed due to a Paidy error.', 'paidy-wc') );
+                $order->add_order_note( __('Completion processing has not been completed due to a Paidy error.', 'woocommerce-for-japan') );
                 return false;
             }
         }
         return true;
     }
 
-    /**
+	/**
      * Check Paidy payment details by payment_id
      *
      * @param string $payment_id
@@ -841,7 +840,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
     public function paidy_get_payment_data( $payment_id ){
         $send_url = 'https://api.paidy.com/payments/' . $payment_id ;
         $args = array(
-            'method' => 'POST',
+            'method' => 'GET',
             'body' => '',
             'headers' => array(
                 'Content-Type' => 'application/json',
@@ -849,7 +848,11 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 'Authorization' => 'Bearer ' . $this->set_api_secret_key()
             )
         );
-        return wp_remote_post($send_url, $args);
+		$payment_order = wp_remote_post( $send_url, $args );
+		if( isset($payment_order['response']['code']) || $payment_order['response']['code'] != 200 ){
+			return false;
+		}
+		return json_decode($payment_order['body']);
     }
 
     /**
@@ -860,7 +863,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
     public function send_notice_email( $message ) {
         $to = $this->notice_email;
         if(is_email($to)){
-            $subject = __('[WooCommerce] Notice of error occurrence in Paidy payment linkage', 'paidy-wc');
+            $subject = __('[WooCommerce] Notice of error occurrence in Paidy payment linkage', 'woocommerce-for-japan');
             $headers = array( 'Content-Type: text/html; charset=UTF-8' );
             wp_mail( $to, $subject, $message, $headers);
         }
@@ -877,17 +880,17 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
      */
     public function notice_message( $order_id, $transaction_id, $situation, $error_message = null ){
         $message = '';
-        $message .= __('An error has occurred in the Paidy payment linkage when changing the status of WooCommerce.', 'paidy-wc'). "\n";
-        $message .= __('Please check the status of Paidy payment and respond accordingly.', 'paidy-wc'). "\n". "\n";
-        $message .= __('Order number:', 'paidy-wc'). $order_id ."\n";
-        $message .= __('Order details URL:', 'paidy-wc'). site_url().'/wp-admin/post.php?post='.$order_id.'&action=edit'."\n";
-        $message .= __('Paidy payment ID:', 'paidy-wc'). $transaction_id ."\n";
-        $message .= __('Error occurrence time:', 'paidy-wc').date("Y/m/d H:i:s"). "\n";
-        $message .= __('Error situation:', 'paidy-wc').$situation. "\n";
+        $message .= __('An error has occurred in the Paidy payment linkage when changing the status of WooCommerce.', 'woocommerce-for-japan'). "\n";
+        $message .= __('Please check the status of Paidy payment and respond accordingly.', 'woocommerce-for-japan'). "\n". "\n";
+        $message .= __('Order number:', 'woocommerce-for-japan'). $order_id ."\n";
+        $message .= __('Order details URL:', 'woocommerce-for-japan'). site_url().'/wp-admin/post.php?post='.$order_id.'&action=edit'."\n";
+        $message .= __('Paidy payment ID:', 'woocommerce-for-japan'). $transaction_id ."\n";
+        $message .= __('Error occurrence time:', 'woocommerce-for-japan').date("Y/m/d H:i:s"). "\n";
+        $message .= __('Error situation:', 'woocommerce-for-japan').$situation. "\n";
         if(isset($error_message)){
-            $message .= __('Error situation:', 'paidy-wc').$error_message. "\n";
+            $message .= __('Error situation:', 'woocommerce-for-japan').$error_message. "\n";
         }
-        $message .= "\n".__('* This e-mail is for sending only, so you cannot reply directly to this e-mail.', 'paidy-wc');
+        $message .= "\n".__('* This e-mail is for sending only, so you cannot reply directly to this e-mail.', 'woocommerce-for-japan');
         return $message;
     }
 
@@ -942,7 +945,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                     if ( ! $value_is_url ) {
                         echo wp_get_attachment_image( $value, 'thumbnail' );
                     } else {
-                        echo sprintf( __( 'Already using URL as image: %s', 'paidy-wc' ), $value );
+                        echo sprintf( __( 'Already using URL as image: %s', 'woocommerce-for-japan' ), $value );
                     }
                     ?>
                 </div>
@@ -950,12 +953,12 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                 <button
                         class="button image_upload"
                         data-field-id="<?php echo esc_attr( $field_key ); ?>"
-                        data-media-frame-title="<?php echo esc_attr( __( 'Select a image to upload', 'paidy-wc' ) ); ?>"
-                        data-media-frame-button="<?php echo esc_attr( __( 'Use this image', 'paidy-wc' ) ); ?>"
-                        data-add-image-text="<?php echo esc_attr( __( 'Add image', 'paidy-wc' ) ); ?>"
+                        data-media-frame-title="<?php echo esc_attr( __( 'Select a image to upload', 'woocommerce-for-japan' ) ); ?>"
+                        data-media-frame-button="<?php echo esc_attr( __( 'Use this image', 'woocommerce-for-japan' ) ); ?>"
+                        data-add-image-text="<?php echo esc_attr( __( 'Add image', 'woocommerce-for-japan' ) ); ?>"
                         style="<?php echo esc_attr( $maybe_hide_add_style ); ?>"
                 >
-                    <?php echo esc_html__( 'Add image', 'paidy-wc' ); ?>
+                    <?php echo esc_html__( 'Add image', 'woocommerce-for-japan' ); ?>
                 </button>
 
                 <button
@@ -963,7 +966,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
                         data-field-id="<?php echo esc_attr( $field_key ); ?>"
                         style="<?php echo esc_attr( $maybe_hide_remove_style ); ?>"
                 >
-                    <?php echo esc_html__( 'Remove image', 'paidy-wc' ); ?>
+                    <?php echo esc_html__( 'Remove image', 'woocommerce-for-japan' ); ?>
                 </button>
 
                 <input type="hidden"
@@ -977,6 +980,22 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
 
         return ob_get_clean();
     }
+
+	/**
+	 * Registers WooCommerce Blocks integration.
+	 *
+	 */
+	public static function wc_paidy_blocks_support(){
+		if ( class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
+			add_action(
+				'woocommerce_blocks_payment_method_type_registration',
+				function( Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry  $payment_method_registry ) {
+					require_once 'class-wc-payments-paidy-blocks-support.php';
+					$payment_method_registry->register( new WC_Gateway_Paidy_Blocks_Support() );
+				}
+			);
+		}
+	}
 }
 
 if( function_exists( 'add_wc4jp_paidy_gateway' ) === false ){
@@ -1007,4 +1026,12 @@ if( function_exists( 'wc4jp_paidy_available_gateways' ) === false ) {
     }
 
     add_filter('woocommerce_available_payment_gateways', 'wc4jp_paidy_available_gateways');
+}
+add_shortcode( 'test_display', 'test_display' );
+function test_display(){
+	$payment_id = 'pay_ZMr_CFMAAFMAc_Bj';
+	$disp = new WC_Gateway_Paidy();
+	$order = $disp->paidy_get_payment_data( $payment_id );
+	echo $order->id."TEST</br>";
+	print_r($order);
 }

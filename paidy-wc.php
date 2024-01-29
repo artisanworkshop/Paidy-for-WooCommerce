@@ -94,10 +94,14 @@ class WC_Paidy{
         define( 'WC_PAIDY_ABSPATH', dirname( __FILE__ ) . '/' );
         // Paidy for WooCommerce plugin file
         define( 'WC_PAIDY_PLUGIN_FILE', __FILE__ );
+        $this->init();
         // Include required files
         $this->includes();
-        $this->init();
-	}
+		// Set up localisation
+		$this->load_plugin_textdomain();
+		// deactivation
+        register_deactivation_hook( WC_PAIDY_PLUGIN_FILE, array( $this, 'on_deactivation' ) );
+    }
 
     /**
      * Flush rewrite rules on deactivate.
@@ -124,11 +128,8 @@ class WC_Paidy{
 	/**
 	 * Init Paidy for WooCommerce when WordPress Initialises.
 	 */
-	public function init() {
-		// Set up localisation
-		$this->load_plugin_textdomain();
-		// deactivation
-        register_deactivation_hook( WC_PAIDY_PLUGIN_FILE, array( $this, 'on_deactivation' ) );
+	public static function init() {
+        add_action( 'woocommerce_blocks_loaded', array( __CLASS__, 'wc_paidy_blocks_support' ) );
 	}
 	/*
 	 * Load Localisation files.
@@ -139,6 +140,22 @@ class WC_Paidy{
 		// Global + Frontend Locale
 		load_plugin_textdomain( 'paidy-wc', false, plugin_basename( dirname( __FILE__ ) ) . "/i18n" );
 	}
+
+    /**
+	 * Registers WooCommerce Blocks integration.
+     *
+     */
+    public static function wc_paidy_blocks_support(){
+        if ( class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
+			add_action(
+				'woocommerce_blocks_payment_method_type_registration',
+				function( Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry  $payment_method_registry ) {
+					require_once 'includes/gateways/paidy/class-wc-payments-paidy-blocks-support.php';
+					$payment_method_registry->register( new WC_Gateway_Paidy_Blocks_Support() );
+				}
+			);
+        }
+    }
 }
 
 endif;
