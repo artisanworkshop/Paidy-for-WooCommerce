@@ -69,8 +69,8 @@ A: No, after application, it becomes available after providing information such 
 
 == Changelog ==
 
-= 1.4.0 - 2024-01-24 =
-
+= 1.4.0 - 2024-01-30 =
+* Dev - Support for custom Payment Request Buttons when using the Checkout block.
 
 = 1.3.0 - 2023-08-03 =
 * Update - Compatible HPOS

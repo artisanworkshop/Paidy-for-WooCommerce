@@ -8,9 +8,9 @@
  * Author URI: https://wc.artws.info/
  * Requires at least: 5.0
  * Requires PHP: 7.4
- * Tested up to: 6.2.2
+ * Tested up to: 6.4.2
  * WC requires at least: 6.0.0
- * WC tested up to: 7.9.0
+ * WC tested up to: 8.5.2
  *
  * Text Domain: paidy-wc
  * Domain Path: /i18n/

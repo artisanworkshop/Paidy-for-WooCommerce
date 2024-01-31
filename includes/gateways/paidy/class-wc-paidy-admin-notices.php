@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class that represents admin notices.
  *
  * @since 1.1.0
- * @version 1.2.0
+ * @version 1.4.0
  */
 class WC_Paidy_Admin_Notices {
 	/**
@@ -75,7 +75,7 @@ class WC_Paidy_Admin_Notices {
 	 * or the environment changes after activation. Also handles upgrade routines.
 	 *
 	 * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.0
 	 */
 	public function paidy_check_environment() {
 		$show_ssl_notice    = get_option( 'wc_paidy_show_ssl_notice' );
@@ -119,7 +119,7 @@ class WC_Paidy_Admin_Notices {
                 }
             }
         }elseif( empty( $show_pr_notice ) && get_option('wc-paygent-paidy') == false){
-            $paidy_link = 'https://campaign.paidy.com/woocommerce';
+            $paidy_link = 'https://paidy.com/merchant/application/';
             /* translators: 1) Paidy PR link */
             $this->add_admin_notice( 'paidy_pr', 'notice notice-info', sprintf( __( 'Paidy payment is a monthly postpaid payment that is adopted by Amazon and Yodobashi Camera. <a href="%s">Click here for details.</a>.', 'paidy-wc' ), $paidy_link ), true );
         }

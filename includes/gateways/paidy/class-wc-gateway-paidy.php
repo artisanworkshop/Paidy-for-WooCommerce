@@ -52,7 +52,7 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
      */
     public function __construct() {
 		$this->id                 = 'paidy';
-//		$this->icon               = apply_filters('woocommerce_paidy_icon', WC_PAIDY_PLUGIN_URL . 'assets/images/paidy_logo_100_2023.png');
+		$this->icon               = apply_filters('woocommerce_paidy_icon', WC_PAIDY_PLUGIN_URL . 'assets/images/paidy_logo_100_2023.png');
 		$this->has_fields         = false;
         $this->order_button_text = sprintf(__( 'Proceed to %s', 'paidy-wc' ), __('Paidy', 'paidy-wc' ));
 
@@ -76,7 +76,6 @@ class WC_Gateway_Paidy extends WC_Payment_Gateway {
         // Define user set variables
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
-//		$this->instructions = $this->get_option( 'instructions', $this->description );
 
 		// Actions Hook
         add_action( 'woocommerce_update_options_payment_gateways', array( $this, 'process_admin_options' ) );
